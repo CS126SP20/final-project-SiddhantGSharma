@@ -82,7 +82,7 @@ FetchContent_GetProperties(catch2)
 if(NOT catch2_POPULATED)
     FetchContent_Populate(catch2)
     # This is overkill since we only need a single file. Though it is a clean solution.
-    add_library(catch2 INTERFACE)
+    add_library(catch2 INTERFACE src/game_engine.cc include/mylibrary/game_engine.h src/game_engine.cc include/mylibrary/player.h include/mylibrary/leaderboard.h include/mylibrary/hangman.h)
     target_include_directories(catch2 INTERFACE ${catch2_SOURCE_DIR}/single_include)
 endif()
 
@@ -103,7 +103,7 @@ FetchContent_Declare(
 FetchContent_GetProperties(sqlite-modern-cpp)
 if (NOT sqlite-modern-cpp_POPULATED)
     FetchContent_Populate(sqlite-modern-cpp)
-    add_library(sqlite-modern-cpp INTERFACE)
+    add_library(sqlite-modern-cpp INTERFACE src/game_engine.cc)
     target_include_directories(sqlite-modern-cpp INTERFACE ${sqlite-modern-cpp_SOURCE_DIR}/hdr)
 endif ()
 
