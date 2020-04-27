@@ -82,7 +82,7 @@ FetchContent_GetProperties(catch2)
 if(NOT catch2_POPULATED)
     FetchContent_Populate(catch2)
     # This is overkill since we only need a single file. Though it is a clean solution.
-    add_library(catch2 INTERFACE src/game_engine.cc include/mylibrary/game_engine.h src/game_engine.cc include/mylibrary/player.h include/mylibrary/leaderboard.h include/mylibrary/hangman.h include/mylibrary/leaderboard.h src/leaderboard.cc)
+    add_library(catch2 INTERFACE src/game_engine.cc include/mylibrary/game_engine.h src/game_engine.cc include/mylibrary/player.h include/mylibrary/leaderboard.h include/mylibrary/hangman.h include/mylibrary/leaderboard.h src/leaderboard.cc include/mylibrary/read_file.h src/read_file.cc)
     target_include_directories(catch2 INTERFACE ${catch2_SOURCE_DIR}/single_include)
 endif()
 
