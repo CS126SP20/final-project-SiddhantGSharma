@@ -6,6 +6,7 @@
 #include <cinder/app/App.h>
 #include <cinder/gl/draw.h>
 #include <cinder/gl/gl.h>
+#include <cinder/audio/audio.h>
 
 namespace hangman_app {
 
