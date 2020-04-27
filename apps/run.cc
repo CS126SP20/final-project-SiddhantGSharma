@@ -3,8 +3,7 @@
 #include <cinder/app/App.h>
 #include <cinder/app/RendererGl.h>
 
-#include "my_app.h"
-
+#include "hangman_app.h"
 
 using cinder::app::App;
 using cinder::app::RendererGl;
@@ -25,6 +24,6 @@ void SetUp(App::Settings* settings) {
 
 
 // This is a macro that runs the application.
-CINDER_APP(myapp::MyApp,
+CINDER_APP(hangman_app::Hangman,
            RendererGl(RendererGl::Options().msaa(myapp::kSamples)),
            myapp::SetUp)

@@ -4,17 +4,19 @@
 #define FINALPROJECT_APPS_MYAPP_H_
 
 #include <cinder/app/App.h>
+#include <cinder/gl/draw.h>
+#include <cinder/gl/gl.h>
 
+namespace hangman_app {
 
-namespace myapp {
-
-class MyApp : public cinder::app::App {
+class Hangman : public cinder::app::App {
  public:
-  MyApp();
+  Hangman();
   void setup() override;
   void update() override;
   void draw() override;
   void keyDown(cinder::app::KeyEvent) override;
+  void Hangman::DrawBackground();
 };
 
 }  // namespace myapp
