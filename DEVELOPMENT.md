@@ -17,3 +17,5 @@
 
 **04/28/20**
 1. Added details of game in the README.md file.
+2. Changed title of the game to "Hangman Gotham"
+3. Changed window size 1572x884
