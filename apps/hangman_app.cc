@@ -15,7 +15,6 @@ cinder::audio::VoiceRef openingSound;
 Hangman::Hangman() { }
 
 void Hangman::setup() {
-  setWindowSize(1572,884);
   cinder::audio::SourceFileRef sourceFile = cinder::audio::load(
       cinder::app::loadAsset("mark-hamill-joker-laugh-ringtone.mp3"));
   openingSound = cinder::audio::Voice::create(sourceFile);
