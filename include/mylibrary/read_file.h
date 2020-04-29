@@ -15,7 +15,7 @@ namespace hangman {
 
 class ReadFile {
  public:
-  vector<string> ReadTxtFile(const string &file_path);
+  std::vector<std::string> ReadTxtFile(const std::string &file_path);
 };
 
 }

@@ -2,15 +2,15 @@
 // Created by SIDDHANT on 4/27/2020.
 //
 
-#include <hangman/read_file.h>
+#include <mylibrary/read_file.h>
 
 namespace hangman {
 
-vector<string> ReadFile::ReadTxtFile(const string &file_path) {
-  vector<string> movies_list;
-  fstream movies_list_file;
+std::vector<std::string> ReadFile::ReadTxtFile(const std::string &file_path) {
+  std::vector<std::string> movies_list;
+  std::fstream movies_list_file;
   movies_list_file.open(file_path);
-  string line;
+  std::string line;
   getline(movies_list_file, line);
 
   while (getline(movies_list_file, line)) {

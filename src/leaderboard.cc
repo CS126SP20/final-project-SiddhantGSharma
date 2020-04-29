@@ -2,8 +2,8 @@
 // Created by SIDDHANT on 4/27/2020.
 //
 
-#include <hangman/leaderboard.h>
-#include <hangman/player.h>
+#include <mylibrary/leaderboard.h>
+#include <mylibrary/player.h>
 #include <sqlite_modern_cpp.h>
 
 #include <string>
