@@ -120,7 +120,8 @@ void Hangman::DrawGameOver() {
   const cinder::vec2 center = getWindowCenter();
   const cinder::ivec2 size = {500, 50};
   const Color color = Color::black();
-  PrintText("Game Over :(", color, size, center);
+  std::string score = std::to_string(engine_.getScore());
+  PrintText("Game Over :(" + score, color, size, center);
   printed_game_over_ = true;
 }
 
