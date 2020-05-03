@@ -40,6 +40,15 @@ void Engine::GetMovieFromList() {
   setRoundOver(false);
 }
 
+void Engine::Step() {
+  if (movie_name_ == incomplete_movie_name_) {
+    score_ += movie_name_.size();
+    round_over_= true;
+  } else {
+    PlayRound();
+  }
+}
+
 void Engine::PlayRound() {
   if (IsCorrectGuess(getUserGuess())) {
     for (size_t i = 0; i < movie_name_.size(); i++) {
@@ -49,11 +58,6 @@ void Engine::PlayRound() {
     }
   } else {
     incorrect_guess_++;
-  }
-
-  if (movie_name_ == incomplete_movie_name_) {
-    score_ += movie_name_.size();
-    round_over_= true;
   }
 }
 

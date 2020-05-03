@@ -15,6 +15,7 @@ class Engine {
  public:
   Engine();
   void GetMovieFromList();
+  void Step();
   void PlayRound();
   bool IsCorrectGuess(char user_guess);
   int getScore() const;
