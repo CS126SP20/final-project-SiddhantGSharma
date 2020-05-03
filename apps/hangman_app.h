@@ -27,10 +27,12 @@ class Hangman : public cinder::app::App {
 
  private:
   void DrawBackground();
+  void DrawMovieName();
 
  private:
   hangman::Engine engine_;
   GameState state_;
+  std::string movie_name_;
 };
 
 }  // namespace myapp
