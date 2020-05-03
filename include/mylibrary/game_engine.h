@@ -14,6 +14,7 @@ const std::string kVowels = "aeiou";
 class Engine {
  public:
   Engine();
+  void CreateList();
   void GetMovieFromList();
   void Step();
   void PlayRound();
@@ -26,6 +27,7 @@ class Engine {
   void setUserGuess(char userGuess);
   const std::vector<char>& getMovieName() const;
   void setMovieName(const std::vector<char>& movieName);
+  void Reset();
 
  private:
   int score_;
@@ -45,6 +47,7 @@ class Engine {
   void setIncompleteMovieName(const std::vector<char>& incompleteMovieName);
  private:
   bool round_over_;
+  std::vector<std::string> movies_list_;
 
  public:
   bool isRoundOver() const;

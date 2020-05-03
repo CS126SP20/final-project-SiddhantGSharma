@@ -11,7 +11,6 @@ std::vector<std::string> ReadFile::ReadTxtFile(const std::string &file_path) {
   std::fstream movies_list_file;
   movies_list_file.open(file_path);
   std::string line;
-  getline(movies_list_file, line);
 
   while (getline(movies_list_file, line)) {
     movies_list.push_back(line);

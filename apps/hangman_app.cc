@@ -9,18 +9,24 @@ namespace hangman_app {
 
 using cinder::app::KeyEvent;
 using cinder::Color;
+using cinder::app::getWindowCenter;
+using cinder::TextBox;
+using cinder::ColorA;
 
 cinder::audio::VoiceRef openingSound;
 cinder::audio::VoiceRef gameSound;
+const char kNormalFont[] = "Arial";
 
 
 Hangman::Hangman()
   : state_{GameState::kPlaying},
     movie_name_{""},
-    paused_{false} {};
+    paused_{false},
+    printed_game_over_{false} {};
 
 void Hangman::setup() {
-  engine_.GetMovieFromList();
+  engine_.CreateList();
+  movie_name_ = engine_.getMovie();
   cinder::audio::SourceFileRef sourceFile = cinder::audio::load(
       cinder::app::loadAsset("mark-hamill-joker-laugh-ringtone.mp3"));
   openingSound = cinder::audio::Voice::create(sourceFile);
@@ -32,9 +38,19 @@ void Hangman::update() {
     state_ = GameState::kGameOver;
   }
 
+  if (state_ == GameState::kGameOver) return;
+
   if (paused_) return;
 
-  cinder::audio::SourceFileRef sourceFile2 = cinder::audio::load(
+  if (engine_.isRoundOver()) {
+    engine_.GetMovieFromList();
+    movie_name_ = engine_.getMovie();
+    return;
+  }
+
+  engine_.Step();
+
+  /**cinder::audio::SourceFileRef sourceFile2 = cinder::audio::load(
       cinder::app::loadAsset("01. Arkham Knight- Main Theme.mp3"));
   gameSound = cinder::audio::Voice::create(sourceFile2);
 
@@ -42,13 +58,21 @@ void Hangman::update() {
     if (!gameSound->isPlaying() && state_ == GameState::kPlaying) {
       gameSound->start();
     }
-  }
+  }*/
 }
 
 void Hangman::draw() {
   cinder::gl::enableAlphaBlending();
-  cinder::gl::clear(Color(0.0f,0.0f,0.0f));
-  DrawBackground();
+
+  if (state_ == GameState::kGameOver) {
+    if (!printed_game_over_) cinder::gl::clear(Color(1, 0, 0));
+    DrawGameOver();
+    return;
+  }
+
+  cinder::gl::clear(Color(1,1,1));
+  DrawMovieName();
+  //DrawBackground();
 }
 
 void Hangman::keyDown(KeyEvent event) {
@@ -66,9 +90,54 @@ void Hangman::keyDown(KeyEvent event) {
 void Hangman::DrawBackground() {
   // for personalised background image
   cinder::gl::color(1,1,1);
-  cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
-      cinder::loadImage(loadAsset("background 1.jpg")));
-  cinder::gl::draw(texture);
+  //cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+      //cinder::loadImage(loadAsset("background 1.jpg")));
+  //cinder::gl::draw(texture);
+}
+
+template <typename C>
+void PrintText(const std::string& text, const C& color, const cinder::ivec2& size,
+               const cinder::vec2& loc) {
+  cinder::gl::color(color);
+
+  auto box = TextBox()
+      .alignment(TextBox::CENTER)
+      .font(cinder::Font(kNormalFont, 30))
+      .size(size)
+      .color(color)
+      .backgroundColor(ColorA(0, 0, 0, 0))
+      .text(text);
+
+  const auto box_size = box.getSize();
+  const cinder::vec2 locp = {loc.x - box_size.x / 2, loc.y - box_size.y / 2};
+  const auto surface = box.render();
+  const auto texture = cinder::gl::Texture::create(surface);
+  cinder::gl::draw(texture, locp);
+}
+
+void Hangman::DrawMovieName() {
+  const cinder::vec2 center = getWindowCenter();
+  const cinder::ivec2 size = {500, 50};
+  const Color color = Color::black();
+  std::vector<char> to_convert = engine_.getIncompleteMovieName();
+  std::string to_print(to_convert.begin(), to_convert.end());
+  PrintText(to_print, color, size, center);
+}
+
+void Hangman::DrawGameOver() {
+  const cinder::vec2 center = getWindowCenter();
+  const cinder::ivec2 size = {500, 50};
+  const Color color = Color::black();
+  PrintText("Game Over :(", color, size, center);
+  printed_game_over_ = true;
+}
+
+void Hangman::Reset() {
+  engine_.Reset();
+  state_ = GameState::kPlaying;
+  movie_name_ = "";
+  paused_ = false;
+  printed_game_over_ = false;
 }
 
 }  // namespace myapp

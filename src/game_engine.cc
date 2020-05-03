@@ -12,16 +12,19 @@ Engine::Engine() {
   round_over_ = false;
 }
 
-void Engine::GetMovieFromList() {
+void Engine::CreateList() {
   ReadFile readFile;
-  std::vector<std::string> movies_list = readFile.ReadFile::ReadTxtFile("C:\\Users\\SIDDHANT\\cinder_0.9.2_vc2015\\my-projects\\final-project-SiddhantGSharma\\assets\\movie_list.txt");
+  movies_list_ = readFile.ReadFile::ReadTxtFile("C:\\Users\\SIDDHANT\\cinder_0.9.2_vc2015\\my-projects\\final-project-SiddhantGSharma\\assets\\movie_list.txt");
+  GetMovieFromList();
+}
 
-  if (movies_list.empty()) {
+void Engine::GetMovieFromList() {
+  if (movies_list_.empty()) {
     setMovie("Game Over");
   }
 
-  std::string movie = movies_list.back();
-  movies_list.pop_back();
+  std::string movie = movies_list_.back();
+  movies_list_.pop_back();
   setMovie(movie);
   std::vector<char> temp(movie.begin(), movie.end());
   std::vector<char> temp_two;
@@ -117,6 +120,13 @@ bool Engine::isVowel(char c) {
   }
 
   return false;
+}
+
+void Engine::Reset() {
+  score_ = 0;
+  incorrect_guess_ = 0;
+  round_over_ = false;
+  user_guess_ = '\0';
 }
 
 }

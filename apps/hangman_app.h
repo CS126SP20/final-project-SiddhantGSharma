@@ -24,16 +24,19 @@ class Hangman : public cinder::app::App {
   void update() override;
   void draw() override;
   void keyDown(cinder::app::KeyEvent) override;
+  void Reset();
 
  private:
   void DrawBackground();
   void DrawMovieName();
+  void DrawGameOver();
 
  private:
   hangman::Engine engine_;
   GameState state_;
   std::string movie_name_;
   bool paused_;
+  bool printed_game_over_;
 };
 
 }  // namespace myapp
