@@ -16,10 +16,11 @@ cinder::audio::VoiceRef gameSound;
 
 Hangman::Hangman()
   : state_{GameState::kPlaying},
-    movie_name_{engine_.GetMovieFromList()},
+    movie_name_{""},
     paused_{false} {};
 
 void Hangman::setup() {
+  engine_.GetMovieFromList();
   cinder::audio::SourceFileRef sourceFile = cinder::audio::load(
       cinder::app::loadAsset("mark-hamill-joker-laugh-ringtone.mp3"));
   openingSound = cinder::audio::Voice::create(sourceFile);
@@ -29,6 +30,10 @@ void Hangman::setup() {
 void Hangman::update() {
   if (movie_name_ == "Game Over") {
     state_ = GameState::kGameOver;
+  }
+
+  if (state_ == GameState::kPlaying) {
+
   }
 
   if (paused_) return;
@@ -54,11 +59,11 @@ void Hangman::keyDown(KeyEvent event) {
   char character = event.getChar();
 
   if (isalpha(character) == 0) {
-    engine_.UserGuess(character);
+    engine_.setUserGuess(character);
   }
 
   if (isdigit(character) == 0) {
-    engine_.UserGuess(character);
+    engine_.setUserGuess(character);
   }
 }
 
