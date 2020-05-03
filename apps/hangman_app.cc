@@ -14,7 +14,6 @@ using cinder::TextBox;
 using cinder::ColorA;
 
 cinder::audio::VoiceRef openingSound;
-cinder::audio::VoiceRef gameSound;
 const char kNormalFont[] = "Arial";
 
 
@@ -28,7 +27,7 @@ void Hangman::setup() {
   engine_.CreateList();
   movie_name_ = engine_.getMovie();
   cinder::audio::SourceFileRef sourceFile = cinder::audio::load(
-      cinder::app::loadAsset("mark-hamill-joker-laugh-ringtone.mp3"));
+      cinder::app::loadAsset("01. Arkham Knight- Main Theme.mp3"));
   openingSound = cinder::audio::Voice::create(sourceFile);
   openingSound->start();
 }
@@ -38,7 +37,10 @@ void Hangman::update() {
     state_ = GameState::kGameOver;
   }
 
-  if (state_ == GameState::kGameOver) return;
+  if (state_ == GameState::kGameOver) {
+    openingSound->stop();
+    return;
+  };
 
   if (paused_) return;
 
@@ -49,16 +51,6 @@ void Hangman::update() {
   }
 
   engine_.Step();
-
-  /**cinder::audio::SourceFileRef sourceFile2 = cinder::audio::load(
-      cinder::app::loadAsset("01. Arkham Knight- Main Theme.mp3"));
-  gameSound = cinder::audio::Voice::create(sourceFile2);
-
-  if (!openingSound->isPlaying()) {
-    if (!gameSound->isPlaying() && state_ == GameState::kPlaying) {
-      gameSound->start();
-    }
-  }*/
 }
 
 void Hangman::draw() {
