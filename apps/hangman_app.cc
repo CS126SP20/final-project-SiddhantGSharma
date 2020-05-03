@@ -34,7 +34,7 @@ void Hangman::setup() {
 }
 
 void Hangman::update() {
-  if (movie_name_ == "Game Over" || engine_.getIncorrectGuess() == 8) {
+  if (engine_.isGameOver() || engine_.getIncorrectGuess() == 8) {
     state_ = GameState::kGameOver;
   }
 
@@ -90,9 +90,9 @@ void Hangman::keyDown(KeyEvent event) {
 void Hangman::DrawBackground() {
   // for personalised background image
   cinder::gl::color(1,1,1);
-  //cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
-      //cinder::loadImage(loadAsset("background 1.jpg")));
-  //cinder::gl::draw(texture);
+  cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+      cinder::loadImage(loadAsset("background 1.jpg")));
+  cinder::gl::draw(texture);
 }
 
 template <typename C>

@@ -9,7 +9,7 @@
 
 namespace hangman {
 
-const std::string kVowels = "aeiou";
+const std::string kVowels = "AEIOUaeiou";
 
 class Engine {
  public:
@@ -48,6 +48,10 @@ class Engine {
  private:
   bool round_over_;
   std::vector<std::string> movies_list_;
+  bool game_over_;
+
+ public:
+  bool isGameOver() const;
 
  public:
   bool isRoundOver() const;

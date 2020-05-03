@@ -10,6 +10,7 @@ Engine::Engine() {
   score_ = 0;
   incorrect_guess_ = 0;
   round_over_ = false;
+  game_over_ = false;
 }
 
 void Engine::CreateList() {
@@ -20,7 +21,8 @@ void Engine::CreateList() {
 
 void Engine::GetMovieFromList() {
   if (movies_list_.empty()) {
-    setMovie("Game Over");
+    game_over_ = true;
+    return;
   }
 
   std::string movie = movies_list_.back();
@@ -127,6 +129,9 @@ void Engine::Reset() {
   incorrect_guess_ = 0;
   round_over_ = false;
   user_guess_ = '\0';
+  game_over_ = false;
 }
+
+bool Engine::isGameOver() const { return game_over_; }
 
 }
