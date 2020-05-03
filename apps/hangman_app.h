@@ -33,6 +33,7 @@ class Hangman : public cinder::app::App {
   hangman::Engine engine_;
   GameState state_;
   std::string movie_name_;
+  bool paused_;
 };
 
 }  // namespace myapp

@@ -13,7 +13,7 @@ namespace hangman {
     Engine();
     std::string GetMovieFromList();
     bool PlayRound(std::string movie_name);
-    void SetCharacter(char user_guess);
+    void UserGuess(char user_guess);
     bool IsCorrectGuess(char user_guess, std::string movie_name);
     int getScore() const;
     void setScore(int score);

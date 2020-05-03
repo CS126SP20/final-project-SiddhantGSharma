@@ -16,7 +16,8 @@ cinder::audio::VoiceRef gameSound;
 
 Hangman::Hangman()
   : state_{GameState::kPlaying},
-    movie_name_{engine_.GetMovieFromList()} {};
+    movie_name_{engine_.GetMovieFromList()},
+    paused_{false} {};
 
 void Hangman::setup() {
   cinder::audio::SourceFileRef sourceFile = cinder::audio::load(
@@ -29,6 +30,8 @@ void Hangman::update() {
   if (movie_name_ == "Game Over") {
     state_ = GameState::kGameOver;
   }
+
+  if (paused_) return;
 
   cinder::audio::SourceFileRef sourceFile2 = cinder::audio::load(
       cinder::app::loadAsset("01. Arkham Knight- Main Theme.mp3"));
@@ -47,7 +50,17 @@ void Hangman::draw() {
   DrawBackground();
 }
 
-void Hangman::keyDown(KeyEvent event) { }
+void Hangman::keyDown(KeyEvent event) {
+  char character = event.getChar();
+
+  if (isalpha(character) == 0) {
+    engine_.UserGuess(character);
+  }
+
+  if (isdigit(character) == 0) {
+    engine_.UserGuess(character);
+  }
+}
 
 void Hangman::DrawBackground() {
   // for personalised background image

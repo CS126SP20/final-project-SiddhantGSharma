@@ -25,7 +25,9 @@ bool Engine::PlayRound(std::string movie_name) {
   return false;
 }
 
-void Engine::SetCharacter(char user_guess) {}
+void Engine::UserGuess(char user_guess) {
+
+}
 
 bool Engine::IsCorrectGuess(char user_guess, std::string movie_name) {
   return false;
