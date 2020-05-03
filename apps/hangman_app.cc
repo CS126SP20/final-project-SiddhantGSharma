@@ -28,12 +28,8 @@ void Hangman::setup() {
 }
 
 void Hangman::update() {
-  if (movie_name_ == "Game Over") {
+  if (movie_name_ == "Game Over" || engine_.getIncorrectGuess() == 8) {
     state_ = GameState::kGameOver;
-  }
-
-  if (state_ == GameState::kPlaying) {
-
   }
 
   if (paused_) return;

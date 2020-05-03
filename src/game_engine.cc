@@ -7,6 +7,8 @@
 namespace hangman {
 
 Engine::Engine() {
+  score_ = 0;
+  incorrect_guess_ = 0;
   round_over_ = false;
 }
 
@@ -34,12 +36,25 @@ void Engine::GetMovieFromList() {
 
   setMovieName(temp);
   setIncompleteMovieName(temp_two);
+  setIncorrectGuess(0);
   setRoundOver(false);
 }
 
 void Engine::PlayRound() {
+  if (IsCorrectGuess(getUserGuess())) {
+    for (size_t i = 0; i < movie_name_.size(); i++) {
+      if (movie_name_.at(i) == user_guess_) {
+        incomplete_movie_name_.at(i) = user_guess_;
+      }
+    }
+  } else {
+    incorrect_guess_++;
+  }
 
-  round_over_ = true;
+  if (movie_name_ == incomplete_movie_name_) {
+    score_ += movie_name_.size();
+    round_over_= true;
+  }
 }
 
 bool Engine::IsCorrectGuess(char user_guess) {

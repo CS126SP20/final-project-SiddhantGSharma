@@ -29,7 +29,7 @@ class Engine {
  private:
   int score_;
   int incorrect_guess_;
-  char user_guess_;
+  char user_guess_{};
   std::string movie;
 
  public:
