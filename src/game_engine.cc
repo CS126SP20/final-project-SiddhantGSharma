@@ -24,9 +24,9 @@ void Engine::GetMovieFromList() {
   std::vector<char> temp(movie.begin(), movie.end());
   std::vector<char> temp_two;
 
-  for (size_t i = 0; i < temp.size(); i++) {
-    if (isVowel(temp.at(i)) || temp.at(i) == ' ') {
-      temp_two.push_back(temp.at(i));
+  for (char i : temp) {
+    if (isVowel(i) || i == ' ') {
+      temp_two.push_back(i);
     } else {
       temp_two.push_back('.');
     }
@@ -43,7 +43,14 @@ void Engine::PlayRound() {
 }
 
 bool Engine::IsCorrectGuess(char user_guess) {
-  return false;
+  for (size_t i = 0; i < movie_name_.size(); i++) {
+    if (user_guess == movie_name_.at(i) &&
+        user_guess != incomplete_movie_name_.at(i)) {
+      return true;
+    }
+  }
+
+  return true;
 }
 
 int Engine::getScore() const { return score_; }
