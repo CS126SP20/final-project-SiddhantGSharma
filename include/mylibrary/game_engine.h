@@ -23,11 +23,11 @@ namespace hangman {
     void setUserGuess(char userGuess);
 
    private:
-    int score_;
+    int score_{};
     const char* getMovieName() const;
-    int incorrect_guess_;
-    char user_guess_;
-    char movie_name_[50];
+    int incorrect_guess_{};
+    char user_guess_{};
+    char movie_name_[50]{};
   };
 }
 

@@ -11,8 +11,10 @@ using cinder::app::KeyEvent;
 using cinder::Color;
 
 cinder::audio::VoiceRef openingSound;
+cinder::audio::VoiceRef gameSound;
 
-Hangman::Hangman() { }
+Hangman::Hangman()
+  : state_{GameState::kPlaying} {};
 
 void Hangman::setup() {
   cinder::audio::SourceFileRef sourceFile = cinder::audio::load(
@@ -21,7 +23,20 @@ void Hangman::setup() {
   openingSound->start();
 }
 
-void Hangman::update() { }
+void Hangman::update() {
+  std::string movie_name = engine_.GetMovieFromList();
+
+  if (movie_name == "Game Over") {
+    state_ = GameState::kGameOver;
+  }
+
+  if (state_ == GameState::kPlaying) {
+    cinder::audio::SourceFileRef sourceFile2 = cinder::audio::load(
+        cinder::app::loadAsset("01. Arkham Knight- Main Theme.mp3"));
+    gameSound = cinder::audio::Voice::create(sourceFile2);
+    gameSound->start();
+  }
+}
 
 void Hangman::draw() {
   cinder::gl::enableAlphaBlending();

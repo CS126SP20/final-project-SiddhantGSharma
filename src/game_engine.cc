@@ -10,7 +10,7 @@ Engine::Engine() {}
 
 std::string Engine::GetMovieFromList() {
   ReadFile readFile;
-  std::vector<std::string> movies_list = readFile.ReadFile::ReadTxtFile("hello.txt");
+  std::vector<std::string> movies_list = readFile.ReadFile::ReadTxtFile("C:\\Users\\SIDDHANT\\cinder_0.9.2_vc2015\\my-projects\\final-project-SiddhantGSharma\\assets\\movie_list.txt");
 
   if (movies_list.empty()) {
     return "Game Over";

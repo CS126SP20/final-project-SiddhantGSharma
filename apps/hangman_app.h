@@ -7,8 +7,15 @@
 #include <cinder/gl/draw.h>
 #include <cinder/gl/gl.h>
 #include <cinder/audio/audio.h>
+#include "mylibrary/game_engine.h"
 
 namespace hangman_app {
+
+enum class GameState {
+    kPlaying,
+    kCountDown,
+    kGameOver,
+};
 
 class Hangman : public cinder::app::App {
  public:
@@ -17,7 +24,13 @@ class Hangman : public cinder::app::App {
   void update() override;
   void draw() override;
   void keyDown(cinder::app::KeyEvent) override;
-  void Hangman::DrawBackground();
+
+ private:
+  void DrawBackground();
+
+ private:
+  hangman::Engine engine_;
+  GameState state_;
 };
 
 }  // namespace myapp
