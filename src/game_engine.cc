@@ -34,7 +34,7 @@ void Engine::GetMovieFromList() {
     if (isVowel(i) || i == ' ') {
       temp_two.push_back(i);
     } else {
-      temp_two.push_back('.');
+      temp_two.push_back('-');
     }
   }
 

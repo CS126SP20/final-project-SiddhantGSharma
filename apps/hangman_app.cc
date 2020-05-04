@@ -14,7 +14,7 @@ using cinder::TextBox;
 using cinder::ColorA;
 
 cinder::audio::VoiceRef openingSound;
-const char kNormalFont[] = "Arial";
+const char kNormalFont[] = "Helvetica";
 const std::string kPlayerName = "Siddhant Sharma";
 const char kDbPath[] = "hangman.db";
 const int kLimit = 3;
@@ -31,7 +31,7 @@ void Hangman::setup() {
   engine_.CreateList();
   movie_name_ = engine_.getMovie();
   cinder::audio::SourceFileRef sourceFile = cinder::audio::load(
-      cinder::app::loadAsset("01. Arkham Knight- Main Theme.mp3"));
+      cinder::app::loadAsset("Backgroung Music.mp3"));
   openingSound = cinder::audio::Voice::create(sourceFile);
   openingSound->start();
 }
@@ -75,8 +75,8 @@ void Hangman::draw() {
   }
 
   cinder::gl::clear(Color(1,1,1));
+  DrawBackground();
   DrawMovieName();
-  //DrawBackground();
 }
 
 void Hangman::keyDown(KeyEvent event) {
@@ -95,7 +95,7 @@ void Hangman::DrawBackground() {
   // for personalised background image
   cinder::gl::color(1,1,1);
   cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
-      cinder::loadImage(loadAsset("background 1.jpg")));
+      cinder::loadImage(loadAsset("Background Image.jpg")));
   cinder::gl::draw(texture);
 }
 
@@ -106,7 +106,7 @@ void PrintText(const std::string& text, const C& color, const cinder::ivec2& siz
 
   auto box = TextBox()
       .alignment(TextBox::CENTER)
-      .font(cinder::Font(kNormalFont, 30))
+      .font(cinder::Font(kNormalFont, 50))
       .size(size)
       .color(color)
       .backgroundColor(ColorA(0, 0, 0, 0))
