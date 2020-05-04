@@ -15,6 +15,6 @@ struct Player {
   size_t score;
 };
 
-}
+} // namespace hangman
 
 #endif  // FINALPROJECT_PLAYER_H

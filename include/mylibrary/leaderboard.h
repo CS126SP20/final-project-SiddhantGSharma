@@ -30,6 +30,6 @@ class LeaderBoard {
   sqlite::database database_;
 };
 
-}
+} // namespace hangman
 
 #endif  // FINALPROJECT_LEADERBOARD_H

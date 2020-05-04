@@ -250,4 +250,4 @@ void Hangman::Reset() {
   game_over_text_ = "\"I'll get you next time, Batman.\"";
 }
 
-}  // namespace myapp
+}  // namespace hangman_app

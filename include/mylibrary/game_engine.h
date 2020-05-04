@@ -14,55 +14,58 @@ const std::string kVowels = "AEIOUaeiou";
 class Engine {
  public:
   Engine();
-  void CreateList();
-  void GetMovieFromList();
+
+  // Executes the steps in a round.
   void Step();
-  void PlayRound();
-  bool IsCorrectGuess(char user_guess);
-  int getScore() const;
-  void setScore(int score);
-  char getUserGuess() const;
-  void setUserGuess(char userGuess);
-  const std::vector<char>& getMovieName() const;
-  void setMovieName(const std::vector<char>& movieName);
+
+  // Start the game over.
   void Reset();
 
- private:
-  int score_;
-  char user_guess_{};
-  std::string movie;
+  // Creates a vector with all movie names from a .txt file.
+  void CreateList();
 
- public:
-  const std::string& getMovie() const;
-  void setMovie(const std::string& movie);
- private:
-  std::vector<char> movie_name_;
-  std::vector<char> incomplete_movie_name_;
+  // Gets each movie from the vector of movie names.
+  void GetMovieFromList();
 
- public:
-  const std::vector<char>& getIncompleteMovieName() const;
-  void setIncompleteMovieName(const std::vector<char>& incompleteMovieName);
- private:
-  bool round_over_;
-  std::vector<std::string> movies_list_;
-  bool game_over_;
-  std::vector<char> incorrect_guesses_;
+  // If user input is a correct guess, it adds it to the blank, else,
+  // it calls PopulateIncorrectGuessList().
+  void PlayRound();
 
- public:
-  const std::vector<char>& getIncorrectGuesses() const;
+  // Returns if the user guess of character is correct or not.
+  bool IsCorrectGuess(char user_guess);
 
- public:
-  bool isGameOver() const;
-
- public:
-  bool isRoundOver() const;
-  void setRoundOver(bool roundOver);
+  // If a guess is incorrect, it adds the character to a vector.
   void PopulateIncorrectGuessList();
 
+  const std::string& getMovie() const;
+  void setMovie(const std::string& movie);
+  void setMovieName(const std::vector<char>& movieName);
+  const std::vector<char>& getIncompleteMovieName() const;
+  void setIncompleteMovieName(const std::vector<char>& incompleteMovieName);
+  char getUserGuess() const;
+  void setUserGuess(char userGuess);
+  const std::vector<char>& getIncorrectGuesses() const;
+  int getScore() const;
+  void setRoundOver(bool roundOver);
+  bool isRoundOver() const;
+  bool isGameOver() const;
+
  private:
+  // Returns if a character is a vowel or not.
   bool isVowel(char c);
+
+ private:
+  std::vector<std::string> movies_list_;
+  std::string movie_;
+  std::vector<char> movie_name_;
+  std::vector<char> incomplete_movie_name_;
+  char user_guess_{};
+  std::vector<char> incorrect_guesses_;
+  int score_;
+  bool round_over_;
+  bool game_over_;
 };
 
-}
+} // namespace hangman
 
 #endif  // FINALPROJECT_GAME_ENGINE_H

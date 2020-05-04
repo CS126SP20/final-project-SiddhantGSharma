@@ -19,4 +19,4 @@ std::vector<std::string> ReadFile::ReadTxtFile(const std::string &file_path) {
   return movies_list;
 }
 
-}
+} // namespace hangman

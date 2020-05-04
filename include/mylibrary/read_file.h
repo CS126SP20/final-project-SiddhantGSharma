@@ -15,9 +15,10 @@ namespace hangman {
 
 class ReadFile {
  public:
+  // Read text from a .txt file and store it into a string vector
   std::vector<std::string> ReadTxtFile(const std::string &file_path);
 };
 
-}
+} // namespace hangman
 
 #endif  // FINALPROJECT_READ_FILE_H
