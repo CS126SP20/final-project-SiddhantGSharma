@@ -107,7 +107,7 @@ void PrintText(const std::string& text, const C& color, const cinder::ivec2& siz
 
   auto box = TextBox()
       .alignment(TextBox::CENTER)
-      .font(cinder::Font(kNormalFont, 50))
+      .font(cinder::Font(kNormalFont, 55))
       .size(size)
       .color(color)
       .backgroundColor(ColorA(0, 0, 0, 0))
@@ -178,7 +178,7 @@ void Hangman::DrawMovieName() {
   const Color color = Color::black();
   std::vector<char> to_convert = engine_.getIncompleteMovieName();
   std::string to_print(to_convert.begin(), to_convert.end());
-  PrintText(to_print, color, size, center);
+  PrintText(to_print, color, size, {center.x, center.y - 160});
 }
 
 void Hangman::DrawGameOver() {
@@ -194,18 +194,18 @@ void Hangman::DrawGameOver() {
   const Color color = Color::black();
   std::string score = std::to_string(engine_.getScore());
   size_t row = 0;
-  PrintText(":: Game Over ::", color, size, {center.x + 250,
+  PrintText(":: Game Over ::", color, size, {center.x + 225,
                                        center.y + (++row) * 50});
-  PrintText("\"I guess you were too slow, Batman.\"", color, size, {center.x + 250,
+  PrintText("\"I guess you were too slow, Batman.\"", color, size, {center.x + 225,
                                                                                      center.y + (++row) * 50});
-  PrintText("Current Score : " + score, color, size, {center.x + 250,
+  PrintText("Current Score : " + score, color, size, {center.x + 225,
                                                center.y + (++row) * 50});
-  PrintText("Highest Scores :", color, size, {center.x + 250,
+  PrintText("Highest Scores :", color, size, {center.x + 225,
                                               center.y + (++row) * 50});
   for (const hangman::Player& player : top_players_) {
     std::stringstream ss;
     ss << player.name << " - " << player.score;
-    PrintText(ss.str(), color, size, {center.x + 250, center.y + (++row) * 50});
+    PrintText(ss.str(), color, size, {center.x + 225, center.y + (++row) * 50});
   }
 
   printed_game_over_ = true;
