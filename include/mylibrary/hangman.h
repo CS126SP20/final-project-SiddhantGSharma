@@ -1,8 +1,0 @@
-//
-// Created by SIDDHANT on 4/27/2020.
-//
-
-#ifndef FINALPROJECT_HANGMAN_H
-#define FINALPROJECT_HANGMAN_H
-
-#endif  // FINALPROJECT_HANGMAN_H

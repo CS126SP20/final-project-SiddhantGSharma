@@ -129,6 +129,13 @@ void Hangman::DrawMovieName() {
 }
 
 void Hangman::DrawGameOver() {
+  // for background image
+  cinder::gl::color(1,1,1);
+  cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+      cinder::loadImage(loadAsset("Game Over Image.jpg")));
+  cinder::gl::draw(texture);
+
+  //for printing text on screen.
   const cinder::vec2 center = getWindowCenter();
   const cinder::ivec2 size = {500, 50};
   const Color color = Color::black();
