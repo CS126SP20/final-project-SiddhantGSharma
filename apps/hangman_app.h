@@ -4,10 +4,13 @@
 #define FINALPROJECT_APPS_MYAPP_H_
 
 #include <cinder/app/App.h>
+#include <cinder/audio/audio.h>
 #include <cinder/gl/draw.h>
 #include <cinder/gl/gl.h>
-#include <cinder/audio/audio.h>
+#include <mylibrary/leaderboard.h>
+
 #include "mylibrary/game_engine.h"
+#include "mylibrary/player.h"
 
 namespace hangman_app {
 
@@ -33,10 +36,12 @@ class Hangman : public cinder::app::App {
 
  private:
   hangman::Engine engine_;
+  hangman::LeaderBoard leaderboard_;
   GameState state_;
   std::string movie_name_;
   bool paused_;
   bool printed_game_over_;
+  std::vector<hangman::Player> top_players_;
 };
 
 }  // namespace myapp

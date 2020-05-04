@@ -15,13 +15,17 @@ using cinder::ColorA;
 
 cinder::audio::VoiceRef openingSound;
 const char kNormalFont[] = "Arial";
+const std::string kPlayerName = "Siddhant Sharma";
+const char kDbPath[] = "hangman.db";
+const int kLimit = 3;
 
 
 Hangman::Hangman()
   : state_{GameState::kPlaying},
     movie_name_{""},
     paused_{false},
-    printed_game_over_{false} {};
+    printed_game_over_{false},
+    leaderboard_{cinder::app::getAssetPath(kDbPath).string()} {};
 
 void Hangman::setup() {
   engine_.CreateList();
@@ -39,6 +43,14 @@ void Hangman::update() {
 
   if (state_ == GameState::kGameOver) {
     openingSound->stop();
+
+    if (top_players_.empty()) {
+      leaderboard_.AddScoreToLeaderBoard({kPlayerName, static_cast<size_t>(engine_.getScore())});
+      top_players_ = leaderboard_.RetrieveHighScores(kLimit);
+      // It is crucial the this vector be populated, given that `kLimit` > 0.
+      assert(!top_players_.empty());
+    }
+
     return;
   };
 
