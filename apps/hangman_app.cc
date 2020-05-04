@@ -12,6 +12,7 @@ using cinder::Color;
 using cinder::app::getWindowCenter;
 using cinder::TextBox;
 using cinder::ColorA;
+using cinder::Rectf;
 
 cinder::audio::VoiceRef openingSound;
 const char kNormalFont[] = "Helvetica";
@@ -121,54 +122,56 @@ void PrintText(const std::string& text, const C& color, const cinder::ivec2& siz
 }
 
 void Hangman::DrawHangman() {
+  const cinder::vec2 center = getWindowCenter();
   int incorrect_guesses = engine_.getIncorrectGuesses().size();
+  Rectf drawRect(center.x - 200, center.y - 60, center.x + 200, center.y + 400);
 
   if (incorrect_guesses == 1) {
     cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
         cinder::loadImage(loadAsset("Hangman 1.png")));
-    cinder::gl::draw(texture);
+    cinder::gl::draw(texture, drawRect);
   }
 
   if (incorrect_guesses == 2) {
     cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
         cinder::loadImage(loadAsset("Hangman 2.png")));
-    cinder::gl::draw(texture);
+    cinder::gl::draw(texture, drawRect);
   }
 
   if (incorrect_guesses == 3) {
     cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
         cinder::loadImage(loadAsset("Hangman 3.png")));
-    cinder::gl::draw(texture);
+    cinder::gl::draw(texture, drawRect);
   }
 
   if (incorrect_guesses == 4) {
     cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
         cinder::loadImage(loadAsset("Hangman 4.png")));
-    cinder::gl::draw(texture);
+    cinder::gl::draw(texture, drawRect);
   }
 
   if (incorrect_guesses == 5) {
     cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
         cinder::loadImage(loadAsset("Hangman 5.png")));
-    cinder::gl::draw(texture);
+    cinder::gl::draw(texture, drawRect);
   }
 
   if (incorrect_guesses == 6) {
     cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
         cinder::loadImage(loadAsset("Hangman 6.png")));
-    cinder::gl::draw(texture);
+    cinder::gl::draw(texture, drawRect);
   }
 
   if (incorrect_guesses == 7) {
     cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
         cinder::loadImage(loadAsset("Hangman 7.png")));
-    cinder::gl::draw(texture);
+    cinder::gl::draw(texture, drawRect);
   }
 
   if (incorrect_guesses == 8) {
     cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
         cinder::loadImage(loadAsset("Hangman 8.png")));
-    cinder::gl::draw(texture);
+    cinder::gl::draw(texture, drawRect);
   }
 }
 
