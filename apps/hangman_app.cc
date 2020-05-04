@@ -174,11 +174,12 @@ void Hangman::DrawHangman() {
 
 void Hangman::DrawMovieName() {
   const cinder::vec2 center = getWindowCenter();
-  const cinder::ivec2 size = {500, 50};
+  const cinder::ivec2 size = {800, 50};
   const Color color = Color::black();
   std::vector<char> to_convert = engine_.getIncompleteMovieName();
   std::string to_print(to_convert.begin(), to_convert.end());
-  PrintText(to_print, color, size, {center.x, center.y - 160});
+  PrintText("\"Guess this movie of yours, Batman!\"", color, size, {center.x, center.y - 160});
+  PrintText(to_print, color, size, {center.x, center.y - 100});
 }
 
 void Hangman::DrawGameOver() {
