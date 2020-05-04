@@ -190,10 +190,24 @@ void Hangman::DrawGameOver() {
 
   //for printing text on screen.
   const cinder::vec2 center = getWindowCenter();
-  const cinder::ivec2 size = {500, 50};
+  const cinder::ivec2 size = {800, 50};
   const Color color = Color::black();
   std::string score = std::to_string(engine_.getScore());
-  PrintText("Game Over :(" + score, color, size, center);
+  size_t row = 0;
+  PrintText(":: Game Over ::", color, size, {center.x + 250,
+                                       center.y + (++row) * 50});
+  PrintText("\"I guess you were too slow, Batman.\"", color, size, {center.x + 250,
+                                                                                     center.y + (++row) * 50});
+  PrintText("Current Score : " + score, color, size, {center.x + 250,
+                                               center.y + (++row) * 50});
+  PrintText("Highest Scores :", color, size, {center.x + 250,
+                                              center.y + (++row) * 50});
+  for (const hangman::Player& player : top_players_) {
+    std::stringstream ss;
+    ss << player.name << " - " << player.score;
+    PrintText(ss.str(), color, size, {center.x + 250, center.y + (++row) * 50});
+  }
+
   printed_game_over_ = true;
 }
 
