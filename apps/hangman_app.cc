@@ -14,23 +14,25 @@ using cinder::TextBox;
 using cinder::ColorA;
 using cinder::Rectf;
 
-cinder::audio::VoiceRef openingSound;
 const char kNormalFont[] = "Helvetica";
 const std::string kPlayerName = "Siddhant Sharma";
 const char kDbPath[] = "hangman.db";
 const int kLimit = 3;
 
+cinder::audio::VoiceRef openingSound;
 
 Hangman::Hangman()
   : state_{GameState::kPlaying},
     movie_name_{""},
-    paused_{false},
     printed_game_over_{false},
-    leaderboard_{cinder::app::getAssetPath(kDbPath).string()} {};
+    leaderboard_{cinder::app::getAssetPath(kDbPath).string()},
+    game_over_text_{"\"I'll get you next time, Batman.\""} {};
 
 void Hangman::setup() {
   engine_.CreateList();
   movie_name_ = engine_.getMovie();
+
+  // for background music
   cinder::audio::SourceFileRef sourceFile = cinder::audio::load(
       cinder::app::loadAsset("Backgroung Music.mp3"));
   openingSound = cinder::audio::Voice::create(sourceFile);
@@ -39,6 +41,11 @@ void Hangman::setup() {
 
 void Hangman::update() {
   if (engine_.isGameOver() || engine_.getIncorrectGuesses().size() == 8) {
+    // if game gets over after player runs out of guesses
+    if (engine_.getIncorrectGuesses().size() == 8) {
+      game_over_text_ = "\"I guess you were too slow, Batman.\"";
+    }
+
     state_ = GameState::kGameOver;
   }
 
@@ -46,7 +53,8 @@ void Hangman::update() {
     openingSound->stop();
 
     if (top_players_.empty()) {
-      leaderboard_.AddScoreToLeaderBoard({kPlayerName, static_cast<size_t>(engine_.getScore())});
+      leaderboard_.AddScoreToLeaderBoard(
+          {kPlayerName,static_cast<size_t>(engine_.getScore())});
       top_players_ = leaderboard_.RetrieveHighScores(kLimit);
       // It is crucial the this vector be populated, given that `kLimit` > 0.
       assert(!top_players_.empty());
@@ -54,8 +62,6 @@ void Hangman::update() {
 
     return;
   };
-
-  if (paused_) return;
 
   if (engine_.isRoundOver()) {
     engine_.GetMovieFromList();
@@ -70,7 +76,8 @@ void Hangman::draw() {
   cinder::gl::enableAlphaBlending();
 
   if (state_ == GameState::kGameOver) {
-    if (!printed_game_over_) cinder::gl::clear(Color(1, 0, 0));
+    if (!printed_game_over_) cinder::gl::clear(Color(
+         1, 0, 0));
     DrawGameOver();
     return;
   }
@@ -81,29 +88,9 @@ void Hangman::draw() {
   DrawHangman();
 }
 
-void Hangman::keyDown(KeyEvent event) {
-  char character = event.getChar();
-
-  if (isalpha(character) == 0) {
-    engine_.setUserGuess(character);
-  }
-
-  if (isdigit(character) == 0) {
-    engine_.setUserGuess(character);
-  }
-}
-
-void Hangman::DrawBackground() {
-  // for personalised background image
-  cinder::gl::color(1,1,1);
-  cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
-      cinder::loadImage(loadAsset("Background Image.jpg")));
-  cinder::gl::draw(texture);
-}
-
 template <typename C>
-void PrintText(const std::string& text, const C& color, const cinder::ivec2& size,
-               const cinder::vec2& loc) {
+void PrintText(const std::string& text, const C& color,
+    const cinder::ivec2& size, const cinder::vec2& loc) {
   cinder::gl::color(color);
 
   auto box = TextBox()
@@ -115,64 +102,20 @@ void PrintText(const std::string& text, const C& color, const cinder::ivec2& siz
       .text(text);
 
   const auto box_size = box.getSize();
-  const cinder::vec2 locp = {loc.x - box_size.x / 2, loc.y - box_size.y / 2};
+  const cinder::vec2 locp = {loc.x - box_size.x / 2,
+                             loc.y - box_size.y / 2};
   const auto surface = box.render();
   const auto texture = cinder::gl::Texture::create(surface);
   cinder::gl::draw(texture, locp);
 }
 
-void Hangman::DrawHangman() {
-  const cinder::vec2 center = getWindowCenter();
-  int incorrect_guesses = engine_.getIncorrectGuesses().size();
-  Rectf drawRect(center.x - 200, center.y - 60, center.x + 200, center.y + 400);
-
-  if (incorrect_guesses == 1) {
-    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
-        cinder::loadImage(loadAsset("Hangman 1.png")));
-    cinder::gl::draw(texture, drawRect);
-  }
-
-  if (incorrect_guesses == 2) {
-    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
-        cinder::loadImage(loadAsset("Hangman 2.png")));
-    cinder::gl::draw(texture, drawRect);
-  }
-
-  if (incorrect_guesses == 3) {
-    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
-        cinder::loadImage(loadAsset("Hangman 3.png")));
-    cinder::gl::draw(texture, drawRect);
-  }
-
-  if (incorrect_guesses == 4) {
-    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
-        cinder::loadImage(loadAsset("Hangman 4.png")));
-    cinder::gl::draw(texture, drawRect);
-  }
-
-  if (incorrect_guesses == 5) {
-    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
-        cinder::loadImage(loadAsset("Hangman 5.png")));
-    cinder::gl::draw(texture, drawRect);
-  }
-
-  if (incorrect_guesses == 6) {
-    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
-        cinder::loadImage(loadAsset("Hangman 6.png")));
-    cinder::gl::draw(texture, drawRect);
-  }
-
-  if (incorrect_guesses == 7) {
-    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
-        cinder::loadImage(loadAsset("Hangman 7.png")));
-    cinder::gl::draw(texture, drawRect);
-  }
-
-  if (incorrect_guesses == 8) {
-    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
-        cinder::loadImage(loadAsset("Hangman 8.png")));
-    cinder::gl::draw(texture, drawRect);
-  }
+void Hangman::DrawBackground() {
+  // for personalised background image
+  cinder::gl::color(1,1,1);
+  cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+      cinder::loadImage(loadAsset(
+          "Background Image.jpg")));
+  cinder::gl::draw(texture);
 }
 
 void Hangman::DrawMovieName() {
@@ -180,16 +123,84 @@ void Hangman::DrawMovieName() {
   const cinder::ivec2 size = {800, 50};
   const Color color = Color::black();
   std::vector<char> to_convert = engine_.getIncompleteMovieName();
+  // converting vector<char> to string for printing
   std::string to_print(to_convert.begin(), to_convert.end());
-  PrintText("\"Guess this movie of yours, Batman!\"", color, size, {center.x, center.y - 160});
+
+  PrintText("\"Guess this movie of yours, Batman!\"", color, size,
+      {center.x, center.y - 160});
   PrintText(to_print, color, size, {center.x, center.y - 100});
+}
+
+void Hangman::DrawHangman() {
+  const cinder::vec2 center = getWindowCenter();
+  // to draw hangman at a specific location
+  Rectf drawRect(center.x - 200, center.y - 60, center.x + 200,
+                 center.y + 400);
+  int incorrect_guesses = engine_.getIncorrectGuesses().size();
+
+  if (incorrect_guesses == 1) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset(
+            "Hangman 1.png")));
+    cinder::gl::draw(texture, drawRect);
+  }
+
+  if (incorrect_guesses == 2) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset(
+            "Hangman 2.png")));
+    cinder::gl::draw(texture, drawRect);
+  }
+
+  if (incorrect_guesses == 3) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset(
+            "Hangman 3.png")));
+    cinder::gl::draw(texture, drawRect);
+  }
+
+  if (incorrect_guesses == 4) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset(
+            "Hangman 4.png")));
+    cinder::gl::draw(texture, drawRect);
+  }
+
+  if (incorrect_guesses == 5) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset(
+            "Hangman 5.png")));
+    cinder::gl::draw(texture, drawRect);
+  }
+
+  if (incorrect_guesses == 6) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset(
+            "Hangman 6.png")));
+    cinder::gl::draw(texture, drawRect);
+  }
+
+  if (incorrect_guesses == 7) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset(
+            "Hangman 7.png")));
+    cinder::gl::draw(texture, drawRect);
+  }
+
+  if (incorrect_guesses == 8) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset(
+            "Hangman 8.png")));
+    cinder::gl::draw(texture, drawRect);
+  }
 }
 
 void Hangman::DrawGameOver() {
   // for background image
   cinder::gl::color(1,1,1);
   cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
-      cinder::loadImage(loadAsset("Game Over Image.jpg")));
+      cinder::loadImage(loadAsset(
+          "Game Over Image.jpg")));
   cinder::gl::draw(texture);
 
   //for printing text on screen.
@@ -198,29 +209,45 @@ void Hangman::DrawGameOver() {
   const Color color = Color::black();
   std::string score = std::to_string(engine_.getScore());
   size_t row = 0;
+
   PrintText(":: Game Over ::", color, size, {center.x + 225,
                                        center.y + (++row) * 50});
-  PrintText("\"I guess you were too slow, Batman.\"", color, size, {center.x + 225,
-                                                                                     center.y + (++row) * 50});
-  PrintText("Current Score : " + score, color, size, {center.x + 225,
-                                               center.y + (++row) * 50});
+  PrintText(game_over_text_ , color, size,
+      {center.x + 225,center.y + (++row) * 50});
+  PrintText("Current Score : " + score, color, size,
+      {center.x + 225,center.y + (++row) * 50});
   PrintText("Highest Scores :", color, size, {center.x + 225,
                                               center.y + (++row) * 50});
+
   for (const hangman::Player& player : top_players_) {
     std::stringstream ss;
     ss << player.name << " - " << player.score;
-    PrintText(ss.str(), color, size, {center.x + 225, center.y + (++row) * 50});
+    PrintText(ss.str(), color, size,
+        {center.x + 225, center.y + (++row) * 50});
   }
 
   printed_game_over_ = true;
+}
+
+void Hangman::keyDown(KeyEvent event) {
+  // to take user input as alphabet or digit
+  char character = event.getChar();
+
+  if (isalpha(character) == 0) {
+    engine_.setUserGuess(character);
+  }
+
+  if (isdigit(character) == 0) {
+    engine_.setUserGuess(character);
+  }
 }
 
 void Hangman::Reset() {
   engine_.Reset();
   state_ = GameState::kPlaying;
   movie_name_ = "";
-  paused_ = false;
   printed_game_over_ = false;
+  game_over_text_ = "\"I'll get you next time, Batman.\"";
 }
 
 }  // namespace myapp
