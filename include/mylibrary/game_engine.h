@@ -21,8 +21,6 @@ class Engine {
   bool IsCorrectGuess(char user_guess);
   int getScore() const;
   void setScore(int score);
-  int getIncorrectGuess() const;
-  void setIncorrectGuess(int incorrectGuess);
   char getUserGuess() const;
   void setUserGuess(char userGuess);
   const std::vector<char>& getMovieName() const;
@@ -31,7 +29,6 @@ class Engine {
 
  private:
   int score_;
-  int incorrect_guess_;
   char user_guess_{};
   std::string movie;
 
@@ -49,6 +46,10 @@ class Engine {
   bool round_over_;
   std::vector<std::string> movies_list_;
   bool game_over_;
+  std::vector<char> incorrect_guesses_;
+
+ public:
+  const std::vector<char>& getIncorrectGuesses() const;
 
  public:
   bool isGameOver() const;
@@ -56,6 +57,7 @@ class Engine {
  public:
   bool isRoundOver() const;
   void setRoundOver(bool roundOver);
+  void PopulateIncorrectGuessList();
 
  private:
   bool isVowel(char c);

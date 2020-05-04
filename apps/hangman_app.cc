@@ -33,7 +33,7 @@ void Hangman::setup() {
 }
 
 void Hangman::update() {
-  if (engine_.isGameOver() || engine_.getIncorrectGuess() == 8) {
+  if (engine_.isGameOver() || engine_.getIncorrectGuesses().size() == 8) {
     state_ = GameState::kGameOver;
   }
 

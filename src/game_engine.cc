@@ -8,7 +8,6 @@ namespace hangman {
 
 Engine::Engine() {
   score_ = 0;
-  incorrect_guess_ = 0;
   round_over_ = false;
   game_over_ = false;
 }
@@ -41,7 +40,11 @@ void Engine::GetMovieFromList() {
 
   setMovieName(temp);
   setIncompleteMovieName(temp_two);
-  setIncorrectGuess(0);
+
+  while (!incorrect_guesses_.empty()) {
+    incorrect_guesses_.pop_back();
+  }
+
   setRoundOver(false);
 }
 
@@ -62,7 +65,7 @@ void Engine::PlayRound() {
       }
     }
   } else {
-    incorrect_guess_++;
+    PopulateIncorrectGuessList();
   }
 }
 
@@ -74,18 +77,12 @@ bool Engine::IsCorrectGuess(char user_guess) {
     }
   }
 
-  return true;
+  return false;
 }
 
 int Engine::getScore() const { return score_; }
 
 void Engine::setScore(int score) { score_ = score; }
-
-int Engine::getIncorrectGuess() const { return incorrect_guess_; }
-
-void Engine::setIncorrectGuess(int incorrectGuess) {
-  incorrect_guess_ = incorrectGuess;
-}
 
 char Engine::getUserGuess() const { return user_guess_; }
 
@@ -126,12 +123,52 @@ bool Engine::isVowel(char c) {
 
 void Engine::Reset() {
   score_ = 0;
-  incorrect_guess_ = 0;
   round_over_ = false;
   user_guess_ = '\0';
   game_over_ = false;
+
+  while (!incorrect_guesses_.empty()) {
+    incorrect_guesses_.pop_back();
+  }
+
+  while (!movies_list_.empty()) {
+    movies_list_.pop_back();
+  }
+
+  while (!movie_name_.empty()) {
+    movie_name_.pop_back();
+  }
+
+  while (!incomplete_movie_name_.empty()) {
+    incomplete_movie_name_.pop_back();
+  }
 }
 
 bool Engine::isGameOver() const { return game_over_; }
+
+void Engine::PopulateIncorrectGuessList() {
+  if (isalpha(user_guess_) || isdigit(user_guess_)) {
+    for (char character : movie_name_) {
+      if (user_guess_ == character) return;
+    }
+
+    if (incorrect_guesses_.empty()) {
+      incorrect_guesses_.push_back(user_guess_);
+      return;
+    }
+
+    for (char incorrect_guess : incorrect_guesses_) {
+      if (user_guess_ == incorrect_guess) {
+        return;
+      }
+    }
+
+    incorrect_guesses_.push_back(user_guess_);
+  }
+}
+
+const std::vector<char>& Engine::getIncorrectGuesses() const {
+  return incorrect_guesses_;
+}
 
 }
