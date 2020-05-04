@@ -32,6 +32,7 @@ class Hangman : public cinder::app::App {
  private:
   void DrawBackground();
   void DrawMovieName();
+  void DrawHangman();
   void DrawGameOver();
 
  private:

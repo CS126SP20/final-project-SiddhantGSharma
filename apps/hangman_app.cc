@@ -77,6 +77,7 @@ void Hangman::draw() {
   cinder::gl::clear(Color(1,1,1));
   DrawBackground();
   DrawMovieName();
+  DrawHangman();
 }
 
 void Hangman::keyDown(KeyEvent event) {
@@ -117,6 +118,58 @@ void PrintText(const std::string& text, const C& color, const cinder::ivec2& siz
   const auto surface = box.render();
   const auto texture = cinder::gl::Texture::create(surface);
   cinder::gl::draw(texture, locp);
+}
+
+void Hangman::DrawHangman() {
+  int incorrect_guesses = engine_.getIncorrectGuesses().size();
+
+  if (incorrect_guesses == 1) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset("Hangman 1.png")));
+    cinder::gl::draw(texture);
+  }
+
+  if (incorrect_guesses == 2) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset("Hangman 2.png")));
+    cinder::gl::draw(texture);
+  }
+
+  if (incorrect_guesses == 3) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset("Hangman 3.png")));
+    cinder::gl::draw(texture);
+  }
+
+  if (incorrect_guesses == 4) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset("Hangman 4.png")));
+    cinder::gl::draw(texture);
+  }
+
+  if (incorrect_guesses == 5) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset("Hangman 5.png")));
+    cinder::gl::draw(texture);
+  }
+
+  if (incorrect_guesses == 6) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset("Hangman 6.png")));
+    cinder::gl::draw(texture);
+  }
+
+  if (incorrect_guesses == 7) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset("Hangman 7.png")));
+    cinder::gl::draw(texture);
+  }
+
+  if (incorrect_guesses == 8) {
+    cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
+        cinder::loadImage(loadAsset("Hangman 8.png")));
+    cinder::gl::draw(texture);
+  }
 }
 
 void Hangman::DrawMovieName() {
