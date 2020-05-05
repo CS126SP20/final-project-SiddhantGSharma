@@ -1,4 +1,4 @@
-// Copyright (c) 2020 [Your Name]. All rights reserved.
+// Copyright (c) 2020 [Siddhant Sharma]. All rights reserved.
 
 #include "hangman_app.h"
 
