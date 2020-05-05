@@ -108,6 +108,10 @@ void Engine::PopulateIncorrectGuessList() {
 
     incorrect_guesses_.push_back(user_guess_);
   }
+
+  if (incorrect_guesses_.size() == 8) {
+    game_over_ = true;
+  }
 }
 
 bool Engine::isVowel(char c) {
@@ -120,6 +124,10 @@ bool Engine::isVowel(char c) {
   return false;
 }
 
+const std::vector<std::string>& Engine::getMoviesList() const {
+  return movies_list_;
+}
+
 const std::string& Engine::getMovie() const { return movie_; }
 
 void Engine::setMovie(const std::string& movie) { Engine::movie_ = movie; }
@@ -127,6 +135,8 @@ void Engine::setMovie(const std::string& movie) { Engine::movie_ = movie; }
 void Engine::setMovieName(const std::vector<char>& movieName) {
   movie_name_ = movieName;
 }
+
+const std::vector<char>& Engine::getMovieName() const { return movie_name_; }
 
 const std::vector<char>& Engine::getIncompleteMovieName() const {
   return incomplete_movie_name_;

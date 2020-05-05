@@ -40,7 +40,7 @@ void Hangman::setup() {
 }
 
 void Hangman::update() {
-  if (engine_.isGameOver() || engine_.getIncorrectGuesses().size() == 8) {
+  if (engine_.isGameOver()) {
     // if game gets over after player runs out of guesses
     if (engine_.getIncorrectGuesses().size() == 8) {
       game_over_text_ = "\"I guess you were too slow, Batman.\"";

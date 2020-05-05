@@ -37,9 +37,16 @@ class Engine {
   // If a guess is incorrect, it adds the character to a vector.
   void PopulateIncorrectGuessList();
 
+  // For testing purposes.
+  const std::vector<std::string>& getMoviesList() const;
+
   const std::string& getMovie() const;
   void setMovie(const std::string& movie);
   void setMovieName(const std::vector<char>& movieName);
+
+  // For testing purposes.
+  const std::vector<char>& getMovieName() const;
+
   const std::vector<char>& getIncompleteMovieName() const;
   void setIncompleteMovieName(const std::vector<char>& incompleteMovieName);
   char getUserGuess() const;
@@ -50,8 +57,8 @@ class Engine {
   bool isRoundOver() const;
   bool isGameOver() const;
 
- private:
   // Returns if a character is a vowel or not.
+  // Made public for testing purposes.
   static bool isVowel(char c);
 
  private:
