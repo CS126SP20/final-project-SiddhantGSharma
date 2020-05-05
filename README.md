@@ -14,7 +14,10 @@ The Batman themed **Hangman** game gives the
 player a movie name to guess which has only the vowels provided. The player has 
 to guess an alphabet or digit of the name. With each correct guess, all 
 instances of that alphabet or digit in the game is populated. With a wrong guess, 
-a silhouette of a hanging man starts drawing. The game is over in two case:
+a silhouette of a hanging man starts drawing. However, once a guess is wrong, 
+the same character would not be counted as a wrong guess the second time. Hence,
+if you accidentally press a key twice, if it is a wrong guess, only one part of 
+the hangman would be drawn. The game is over in two case:
 1) The player correctly guesses the name of all the movies.
 2) The hangman is completely drawn (in which case the player loses the game)
 

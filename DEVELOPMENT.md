@@ -36,7 +36,9 @@
 5. Improved readability of the code.
 
 **05/05/20**
-1. Added test cases for game_engine.cc and read_file.cc
-2. Updated README.md
-3. Added PROPOSAL.md
-4. Updated DEVELOPMENT.md
+1. Added keyUp() to avoid alphabet/digit input when key is released.
+2. Added the display of incorrect user guesses on the screen.
+3. Added test cases for game_engine.cc and read_file.cc
+4. Updated README.md
+5. Added PROPOSAL.md
+6. Updated DEVELOPMENT.md
