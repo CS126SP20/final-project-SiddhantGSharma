@@ -52,7 +52,7 @@ class Engine {
 
  private:
   // Returns if a character is a vowel or not.
-  bool isVowel(char c);
+  static bool isVowel(char c);
 
  private:
   std::vector<std::string> movies_list_;

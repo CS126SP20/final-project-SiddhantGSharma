@@ -56,7 +56,7 @@ void Hangman::update() {
       leaderboard_.AddScoreToLeaderBoard(
           {kPlayerName,static_cast<size_t>(engine_.getScore())});
       top_players_ = leaderboard_.RetrieveHighScores(kLimit);
-      // It is crucial the this vector be populated, given that `kLimit` > 0.
+      // It is crucial that this vector be populated, given that `kLimit` > 0.
       assert(!top_players_.empty());
     }
 

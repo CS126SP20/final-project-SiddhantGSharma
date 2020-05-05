@@ -13,8 +13,7 @@ Engine::Engine() {
 }
 
 void Engine::CreateList() {
-  ReadFile readFile;
-  movies_list_ = readFile.ReadFile::ReadTxtFile("C:\\Users\\SIDDHANT\\cinder_0.9.2_vc2015\\my-projects\\final-project-SiddhantGSharma\\assets\\movie_list.txt");
+  movies_list_ = hangman::ReadFile::ReadTxtFile("C:\\Users\\SIDDHANT\\cinder_0.9.2_vc2015\\my-projects\\final-project-SiddhantGSharma\\assets\\movie_list.txt");
 
   GetMovieFromList();
 }
@@ -32,6 +31,7 @@ void Engine::GetMovieFromList() {
   std::vector<char> temp(movie.begin(), movie.end());
   std::vector<char> temp_two;
 
+  // creating incomplete movie name for guessing
   for (char i : temp) {
     if (isVowel(i) || i == ' ') {
       temp_two.push_back(i);
