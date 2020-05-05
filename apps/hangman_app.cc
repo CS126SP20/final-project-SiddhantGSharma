@@ -109,6 +109,28 @@ void PrintText(const std::string& text, const C& color,
   cinder::gl::draw(texture, locp);
 }
 
+// Only for printing incorrect guesses on the screen.
+template <typename C>
+void PrintIncorrectGuessText(const std::string& text, const C& color,
+               const cinder::ivec2& size, const cinder::vec2& loc) {
+  cinder::gl::color(color);
+
+  auto box = TextBox()
+      .alignment(TextBox::CENTER)
+      .font(cinder::Font(kNormalFont, 35))
+      .size(size)
+      .color(color)
+      .backgroundColor(ColorA(0, 0, 0, 0))
+      .text(text);
+
+  const auto box_size = box.getSize();
+  const cinder::vec2 locp = {loc.x - box_size.x / 2,
+                             loc.y - box_size.y / 2};
+  const auto surface = box.render();
+  const auto texture = cinder::gl::Texture::create(surface);
+  cinder::gl::draw(texture, locp);
+}
+
 void Hangman::DrawBackground() {
   // for personalised background image
   cinder::gl::color(1,1,1);
@@ -133,6 +155,22 @@ void Hangman::DrawMovieName() {
 
 void Hangman::DrawHangman() {
   const cinder::vec2 center = getWindowCenter();
+
+  // to print incorrect guesses of the user
+  const cinder::ivec2 size = {800, 50};
+  const Color color = Color::black();
+  size_t row = 1;
+  PrintIncorrectGuessText("Incorrect Guesses : ", color, size,
+      {center.x + 225,center.y - 50});
+
+  // to print each incorrectly guessed character
+  for (char character : engine_.getIncorrectGuesses()) {
+    std::string to_print;
+    to_print += character;
+    PrintIncorrectGuessText(to_print, color, size,
+              {center.x + 225, center.y - 50 + (++row) * 30});
+  }
+
   // to draw hangman at a specific location
   Rectf drawRect(center.x - 200, center.y - 60, center.x + 200,
                  center.y + 400);

@@ -31,12 +31,16 @@ TEST_CASE("Create and get movie from list") {
     REQUIRE(engine.getIncorrectGuesses().empty());
 
     SECTION("Movie name vector") {
-      std::vector<char> testing_vector{'U', 'n', 'd', 'e', 'r', ' ', 'T', 'h', 'e', ' ', 'R', 'e', 'd', 'h', 'o', 'o', 'd'};
+      std::vector<char> testing_vector{'U', 'n', 'd', 'e', 'r', ' ', 'T', 'h',
+                                       'e', ' ', 'R', 'e', 'd', 'h', 'o', 'o',
+                                       'd'};
       REQUIRE(engine.getMovieName() == testing_vector);
     }
 
     SECTION("Incomplete movie name vector") {
-      std::vector<char> testing_vector{'U', '-', '-', 'e', '-', ' ', '-', '-', 'e', ' ', '-', 'e', '-', '-', 'o', 'o', '-'};
+      std::vector<char> testing_vector{'U', '-', '-', 'e', '-', ' ', '-', '-',
+                                       'e', ' ', '-', 'e', '-', '-', 'o', 'o',
+                                       '-'};
       REQUIRE(engine.getIncompleteMovieName() == testing_vector);
     }
 
@@ -56,12 +60,15 @@ TEST_CASE("Run a step in game") {
   SECTION("Playing a round") {
     engine.setUserGuess('d');
     engine.Step();
-    std::vector<char> testing_vector{'U', '-', 'd', 'e', '-', ' ', '-', '-', 'e', ' ', '-', 'e', 'd', '-', 'o', 'o', 'd'};
+    std::vector<char> testing_vector{'U', '-', 'd', 'e', '-', ' ', '-', '-',
+                                     'e', ' ', '-', 'e', 'd', '-', 'o', 'o',
+                                     'd'};
 
     REQUIRE(engine.getIncompleteMovieName() == testing_vector);
   }
 
-  std::vector<char> testing_vector{'U', 'n', 'd', 'e', 'r', ' ', 'T', 'h', 'e', ' ', 'R', 'e', 'd', 'h', 'o', 'o', 'd'};
+  std::vector<char> testing_vector{'U', 'n', 'd', 'e', 'r', ' ', 'T', 'h', 'e',
+                                   ' ', 'R', 'e', 'd', 'h', 'o', 'o', 'd'};
   engine.setIncompleteMovieName(testing_vector);
   engine.Step();
 
@@ -76,7 +83,9 @@ TEST_CASE("Play round") {
   SECTION("Correct user guess") {
     engine.setUserGuess('d');
     engine.PlayRound();
-    std::vector<char> testing_vector{'U', '-', 'd', 'e', '-', ' ', '-', '-', 'e', ' ', '-', 'e', 'd', '-', 'o', 'o', 'd'};
+    std::vector<char> testing_vector{'U', '-', 'd', 'e', '-', ' ', '-', '-',
+                                     'e', ' ', '-', 'e', 'd', '-', 'o', 'o',
+                                     'd'};
 
     REQUIRE(engine.getIncompleteMovieName() == testing_vector);
   }
@@ -84,7 +93,9 @@ TEST_CASE("Play round") {
   SECTION("Incorrect user guess") {
     engine.setUserGuess('1');
     engine.PlayRound();
-    std::vector<char> testing_vector{'U', '-', '-', 'e', '-', ' ', '-', '-', 'e', ' ', '-', 'e', '-', '-', 'o', 'o', '-'};
+    std::vector<char> testing_vector{'U', '-', '-', 'e', '-', ' ', '-', '-',
+                                     'e', ' ', '-', 'e', '-', '-', 'o', 'o',
+                                     '-'};
 
     REQUIRE(engine.getIncompleteMovieName() == testing_vector);
     REQUIRE(engine.getIncorrectGuesses().size() == 1);
