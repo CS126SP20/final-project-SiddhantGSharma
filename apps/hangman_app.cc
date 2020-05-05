@@ -155,6 +155,12 @@ void Hangman::DrawMovieName() {
 
 void Hangman::DrawHangman() {
   const cinder::vec2 center = getWindowCenter();
+  int incorrect_guesses = engine_.getIncorrectGuesses().size();
+
+  //nothing to draw
+  if (incorrect_guesses == 0) {
+    return;
+  }
 
   // to print incorrect guesses of the user
   const cinder::ivec2 size = {800, 50};
@@ -174,7 +180,6 @@ void Hangman::DrawHangman() {
   // to draw hangman at a specific location
   Rectf drawRect(center.x - 200, center.y - 60, center.x + 200,
                  center.y + 400);
-  int incorrect_guesses = engine_.getIncorrectGuesses().size();
 
   if (incorrect_guesses == 1) {
     cinder::gl::Texture2dRef texture = cinder::gl::Texture::create(
@@ -271,12 +276,17 @@ void Hangman::keyDown(KeyEvent event) {
   // to take user input as alphabet or digit
   char character = event.getChar();
 
-  if (isalpha(character) == 0) {
+  if (isalpha(character) || isdigit(character)) {
     engine_.setUserGuess(character);
   }
+}
 
-  if (isdigit(character) == 0) {
-    engine_.setUserGuess(character);
+void Hangman::keyUp(KeyEvent event) {
+  // to avoid alphabet/digit input when key is released.
+  char character = event.getChar();
+
+  if (isalpha(character) || isdigit(character)) {
+    engine_.setUserGuess(' ');
   }
 }
 
