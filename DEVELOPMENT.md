@@ -34,3 +34,9 @@
 3. Added leaderboard to the Game Over Screen.
 4. Added major graphics like game text, hangman drawing, game over screen, etc.
 5. Improved readability of the code.
+
+**05/05/20**
+1. Added test cases for game_engine.cc and read_file.cc
+2. Updated README.md
+3. Added PROPOSAL.md
+4. Updated DEVELOPMENT.md
